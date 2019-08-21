@@ -41,5 +41,5 @@ def connect_word_blocks(word_blocks: [[str]], connected_indexes=None) -> [int]:
     if len(next_candidate) == 0:
         return []
     else:
-        next_index = randint(0, next_candidate.__len__() - 1)
+        next_index = randint(0, len(next_candidate) - 1)
         connect_word_blocks(word_blocks, connected_indexes + [next_index])
