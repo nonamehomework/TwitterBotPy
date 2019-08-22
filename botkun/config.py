@@ -65,3 +65,8 @@ def parse_config(config_toml: str) -> BotConfig:
         twitter_user_name=parsed_config["options"]["twitter_user_name"],
         database_path=parsed_config["options"]["database_path"]
     )
+
+
+def get_config(custom_path_to_config=""):
+    config_toml = read_config_file(custom_path_to_config)
+    return parse_config(config_toml)

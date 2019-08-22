@@ -4,12 +4,14 @@ from botkun.add import add
 from botkun.tweet import tweet
 from botkun.clear import clear
 from botkun.info import info
+from botkun.config import *
 
 __version__ = '1.0'
 
 
 def main():
     options = parse_argument()
+    config = get_config(options["config"])
 
     if options["action"] == "add":
         if options["database"]:
@@ -42,6 +44,7 @@ def parse_argument() -> dict:
                         choices=["add", "tweet", "clear", "info"])
     parser.add_argument("-c", "--config",
                         type=str,
+                        default="",
                         help="custom config path")
     parser.add_argument("-l", "--local",
                         action="store_true",
