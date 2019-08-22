@@ -10,14 +10,12 @@ def add_to_database(db_name: str, data: [dict]) -> int:
         cursor = connection.cursor()
 
         # create table
-        cursor.execute("SHOW TABLES LIKE {}".format(table_name))
-        if cursor.rowcount == 0:
-            cursor.execute("CREATE TABLE {} (word1 TEXT, word2 TEXT,\
-                                  word3 TEXT, id INTEGER, user TEXT)".format(table_name))
+        cursor.execute("CREATE TABLE IF NOT EXISTS {} \
+        (word1 TEXT, word2 TEXT, word3 TEXT, id INTEGER, user TEXT);".format(table_name))
 
         # insert to table
         insert_sql = "INSERT INTO {} (word1, word2, word3, id, user)\
-                                              values (?, ?, ?, ?, ?)".format(table_name)
+                                              VALUES (?, ?, ?, ?, ?);".format(table_name)
         params = [(d["word1"], d["word2"], d["word3"], d["id"], d["user"]) for d in data]
 
         cursor.executemany(insert_sql, params)
@@ -31,7 +29,12 @@ def get_latest_tweet(db_name: str) -> int:
     connection = sqlite3.connect(db_name)
     with closing(connection):
         cursor = connection.cursor()
-        max_sql = "SELECT MAX(id) FROM {}".format(table_name)
+
+        # create table
+        cursor.execute("CREATE TABLE IF NOT EXISTS {} \
+        (word1 TEXT, word2 TEXT, word3 TEXT, id INTEGER, user TEXT);".format(table_name))
+
+        max_sql = "SELECT MAX(id) FROM {};".format(table_name)
         cursor.execute(max_sql)
         if cursor.rowcount == 0:
             return 0
@@ -45,7 +48,7 @@ def get_db_entries(db_name: str) -> [dict]:
     connection = sqlite3.connect(db_name)
     with closing(connection):
         cursor = connection.cursor()
-        max_sql = "SELECT * FROM {}".format(table_name)
+        max_sql = "SELECT * FROM {};".format(table_name)
         cursor.execute(max_sql)
         for (w1, w2, w3, i, u) in cursor.fetchall():
             word_blocks.append({
