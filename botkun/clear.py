@@ -1,8 +1,9 @@
 from botkun.lib.database import *
+from botkun.config import BotConfig
 
 
-def clear():
-    result = clear_db("bot")
+def clear(config: BotConfig):
+    result = clear_db(config.database_path)
     if result:
         print("Clear succeed")
     else:

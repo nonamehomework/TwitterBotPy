@@ -1,18 +1,25 @@
 from botkun.lib.twitter_handler import *
 from botkun.lib.markov import *
 from botkun.lib.database import *
+from botkun.config import BotConfig
 import random
 
 max_try = 100
 
 
-def tweet(local: bool, use_database: bool):
+def tweet(config: BotConfig):
     db_entries = []
-    if use_database:
-        db_entries += get_db_entries("bot")
+    if config.use_database:
+        db_entries += get_db_entries(config.database_path)
         print("got {} entries from database".format(len(db_entries)))
     else:
-        filtered_tweets = get_filtered_tweets("bottokuxn")
+        filtered_tweets = get_filtered_tweets(
+            config.consumer_key,
+            config.consumer_secret,
+            config.access_token,
+            config.access_secret,
+            config.twitter_user_name
+        )
 
         print("got {} tweets".format(len(filtered_tweets)))
 
@@ -43,14 +50,20 @@ def tweet(local: bool, use_database: bool):
 
     for e in choice:
         print(([e["word1"], e["word2"], e["word3"]], e["user"]))
-        delete_success = delete_db_entries_by_id("bot", e["id"])
+        delete_success = delete_db_entries_by_id(config.database_path, e["id"])
         if not delete_success:
             print("Failed to delete entry from database")
 
     print("text: {}".format(text))
 
-    if not local:
-        res = post_tweet_with_session(text)
+    if not config.local:
+        res = post_tweet_with_session(
+            text,
+            config.consumer_key,
+            config.consumer_secret,
+            config.access_token,
+            config.access_secret
+        )
         if res:
             print("Post succeed")
         else:
