@@ -2,15 +2,16 @@ from twitter import Api
 from twitter import TwitterError
 
 
-def get_filtered_tweets(my_screen_name="") -> [dict]:
-    my_screen_name = "bottokuxn"
-
+def get_filtered_tweets(consumer_key: str,
+                        consumer_secret: str,
+                        access_token: str,
+                        access_secret: str,
+                        my_screen_name="") -> [dict]:
     session = create_session(
-        # TODO: Read from configuration
-        input("consumer: "),
-        input("consumer secret: "),
-        input("access token: "),
-        input("access token secret: "))
+        consumer_key=consumer_key,
+        consumer_secret=consumer_secret,
+        access_token=access_token,
+        access_secret=access_secret)
     timeline = get_home_timeline(session)
 
     tweet_filter = (lambda s:
@@ -40,13 +41,17 @@ def post_tweet(status: str, session: Api) -> bool:
         return False
 
 
-def post_tweet_with_session(status: str) -> bool:
+def post_tweet_with_session(status: str,
+                            consumer_key: str,
+                            consumer_secret: str,
+                            access_token: str,
+                            access_secret: str,
+                            ) -> bool:
     session = create_session(
-        # TODO: Read from configuration
-        input("consumer: "),
-        input("consumer secret: "),
-        input("access token: "),
-        input("access token secret: "))
+        consumer_key=consumer_key,
+        consumer_secret=consumer_secret,
+        access_token=access_token,
+        access_secret=access_secret)
     return post_tweet(status, session)
 
 
