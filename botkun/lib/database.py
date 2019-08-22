@@ -76,3 +76,16 @@ def delete_db_entries_by_id(db_name: str, tweet: int) -> bool:
         check_sql = "SELECT * FROM {} WHERE (id) = (?);".format(table_name)
         cursor.execute(check_sql, (str(tweet), ))
         return len(cursor.fetchall()) == 0
+
+
+def clear_db(db_name: str) -> bool:
+    connection = sqlite3.connect(db_name)
+    with closing(connection):
+        cursor = connection.cursor()
+        delete_sql = "DELETE FROM {};".format(table_name)
+        cursor.execute(delete_sql)
+        connection.commit()
+
+        check_sql = "SELECT * FROM {}".format(table_name)
+        cursor.execute(check_sql)
+        return len(cursor.fetchall()) == 0
