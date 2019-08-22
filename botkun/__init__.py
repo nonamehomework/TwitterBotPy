@@ -54,9 +54,5 @@ def parse_argument() -> dict:
             }
 
 
-def info(use_database: bool):
-    pass
-
-
 if __name__ == "__main__":
     main()
