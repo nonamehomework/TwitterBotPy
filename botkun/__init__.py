@@ -2,6 +2,7 @@
 from argparse import ArgumentParser
 from botkun.add import add
 from botkun.tweet import tweet
+from botkun.clear import clear
 
 __version__ = '1.0'
 
@@ -51,10 +52,6 @@ def parse_argument() -> dict:
             "local": args.local,
             "database": not args.no_database
             }
-
-
-def clear():
-    pass
 
 
 def info(use_database: bool):
