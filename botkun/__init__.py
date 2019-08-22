@@ -15,24 +15,24 @@ def main():
     bot_config.save_arguments(options)
 
     if options["action"] == "add":
-        if options["database"]:
-            add()
+        if bot_config.use_database:
+            add(bot_config)
         else:
             print("no database mode detected.")
             print("nothing to do")
 
     elif options["action"] == "tweet":
-        tweet(options["local"], options["database"])
+        tweet(bot_config)
 
     elif options["action"] == "clear":
-        if options["database"]:
-            clear()
+        if bot_config.use_database:
+            clear(bot_config)
         else:
             print("no database mode detected.")
             print("nothing to do")
 
     elif options["action"] == "info":
-        info(options["database"])
+        info(bot_config)
 
     else:
         exit(-1)  # unreachable code
