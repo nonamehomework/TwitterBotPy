@@ -40,6 +40,9 @@ def parse_argument() -> dict:
     parser.add_argument("-a", "--action",
                         required=True,
                         choices=["add", "tweet", "clear", "info"])
+    parser.add_argument("-c", "--config",
+                        type=str,
+                        help="custom config path")
     parser.add_argument("-l", "--local",
                         action="store_true",
                         help="don't post tweet.py, only to console output")
@@ -50,6 +53,7 @@ def parse_argument() -> dict:
     args = parser.parse_args()
 
     return {"action": args.action,
+            "config": args.config,
             "local": args.local,
             "database": not args.no_database
             }
