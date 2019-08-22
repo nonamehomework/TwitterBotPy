@@ -1,3 +1,5 @@
-def info(use_database: bool):
-    pass
+from botkun.config import BotConfig
 
+
+def info(config: BotConfig):
+    pass
