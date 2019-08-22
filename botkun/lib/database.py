@@ -22,7 +22,7 @@ def add_to_database(db_name: str, data: [dict]) -> int:
         connection.commit()
 
         cursor.execute("SELECT * FROM {}".format(table_name))
-        return cursor.rowcount
+        return len(cursor.fetchall())
 
 
 def get_latest_tweet(db_name: str) -> int:
@@ -36,10 +36,14 @@ def get_latest_tweet(db_name: str) -> int:
 
         max_sql = "SELECT MAX(id) FROM {};".format(table_name)
         cursor.execute(max_sql)
-        if cursor.rowcount == 0:
+        result = cursor.fetchall()
+        if len(result) == 0:
+            return 0
+
+        m = result[0][0]
+        if m is None:
             return 0
         else:
-            (m) = cursor.fetchone()
             return m
 
 
