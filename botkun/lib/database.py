@@ -63,3 +63,16 @@ def get_db_entries(db_name: str) -> [dict]:
                 "user": u
             })
     return word_blocks
+
+
+def delete_db_entries_by_id(db_name: str, tweet: int) -> bool:
+    connection = sqlite3.connect(db_name)
+    with closing(connection):
+        cursor = connection.cursor()
+        delete_sql = "DELETE FROM {} WHERE (id) = (?);".format(table_name)
+        cursor.execute(delete_sql, (str(tweet), ))
+        connection.commit()
+
+        check_sql = "SELECT * FROM {} WHERE (id) = (?);".format(table_name)
+        cursor.execute(check_sql, (str(tweet), ))
+        return len(cursor.fetchall()) == 0

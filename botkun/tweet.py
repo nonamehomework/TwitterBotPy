@@ -40,10 +40,13 @@ def tweet(local: bool, use_database: bool):
     choice = random.choice(candidates)
 
     text = create_string_from_blocks(choice)
-    authors = [([e["word1"], e["word2"], e["word3"]], e["user"]) for e in choice]
 
-    for e in authors:
-        print(e)
+    for e in choice:
+        print(([e["word1"], e["word2"], e["word3"]], e["user"]))
+        delete_success = delete_db_entries_by_id("bot", e["id"])
+        if not delete_success:
+            print("Failed to delete entry from database")
+
     print("text: {}".format(text))
 
     if not local:
