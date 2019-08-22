@@ -11,7 +11,8 @@ __version__ = '1.0'
 
 def main():
     options = parse_argument()
-    config = get_config(options["config"])
+    bot_config = get_config(options["config"])
+    bot_config.save_arguments(options)
 
     if options["action"] == "add":
         if options["database"]:
