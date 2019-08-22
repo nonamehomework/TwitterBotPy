@@ -37,8 +37,7 @@ def main():
 
 def parse_argument() -> dict:
     parser = ArgumentParser()
-    parser.add_argument("-a", "--action",
-                        required=True,
+    parser.add_argument("action",
                         choices=["add", "tweet", "clear", "info"])
     parser.add_argument("-l", "--local",
                         action="store_true",
