@@ -27,7 +27,7 @@ class BotConfig:
 
     def save_arguments(self, options: [dict]):
         self.local = options["local"]
-        self.use_database = not options["no_database"]
+        self.use_database = options["database"]
 
 
 def get_library_root_path():
