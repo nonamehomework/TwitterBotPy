@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 from botkun.add import add
 from botkun.tweet import tweet
 from botkun.clear import clear
+from botkun.info import info
 
 __version__ = '1.0'
 
