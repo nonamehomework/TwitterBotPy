@@ -1,6 +1,13 @@
 import os
 import toml
 
+home = os.getenv("HOME")
+default_config_path = [
+    home + "/.botkun.toml",
+    home + "/.config/botkun.toml",
+    home + "/.config/botkun/config.toml"
+]
+
 
 class BotConfig:
     def __init__(self,
@@ -47,12 +54,6 @@ def get_library_root_path():
 
 
 def get_config_file_path(custom_path_to_config="") -> str:
-    home = os.getenv("HOME")
-    default_config_path = [
-        home + "/.botkun.toml",
-        home + "/.config/botkun.toml",
-        home + "/.config/botkun/config.toml"
-    ]
     path_to_config = custom_path_to_config
     if path_to_config == "":
         path_to_config = [p for p in default_config_path if os.path.isfile(p)][0]
