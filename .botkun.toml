@@ -1,0 +1,10 @@
+# botkun configuration file
+
+[api]
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_secret = ""
+[options]
+twitter_user_name = ""
+database_path = ""
