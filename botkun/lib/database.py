@@ -52,6 +52,10 @@ def get_db_entries(db_name: str) -> [dict]:
     connection = sqlite3.connect(db_name)
     with closing(connection):
         cursor = connection.cursor()
+        # create table
+        cursor.execute("CREATE TABLE IF NOT EXISTS {} \
+                (word1 TEXT, word2 TEXT, word3 TEXT, id INTEGER, user TEXT);".format(table_name))
+
         max_sql = "SELECT * FROM {};".format(table_name)
         cursor.execute(max_sql)
         for (w1, w2, w3, i, u) in cursor.fetchall():
@@ -69,6 +73,10 @@ def delete_db_entries_by_id(db_name: str, tweet: int) -> bool:
     connection = sqlite3.connect(db_name)
     with closing(connection):
         cursor = connection.cursor()
+        # create table
+        cursor.execute("CREATE TABLE IF NOT EXISTS {} \
+                (word1 TEXT, word2 TEXT, word3 TEXT, id INTEGER, user TEXT);".format(table_name))
+
         delete_sql = "DELETE FROM {} WHERE (id) = (?);".format(table_name)
         cursor.execute(delete_sql, (str(tweet), ))
         connection.commit()
@@ -82,6 +90,11 @@ def clear_db(db_name: str) -> bool:
     connection = sqlite3.connect(db_name)
     with closing(connection):
         cursor = connection.cursor()
+
+        # create table
+        cursor.execute("CREATE TABLE IF NOT EXISTS {} \
+                (word1 TEXT, word2 TEXT, word3 TEXT, id INTEGER, user TEXT);".format(table_name))
+
         delete_sql = "DELETE FROM {};".format(table_name)
         cursor.execute(delete_sql)
         connection.commit()
