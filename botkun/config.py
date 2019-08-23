@@ -24,10 +24,20 @@ class BotConfig:
 
         self.local = False
         self.use_database = True
+        self.file_path = ""
+
+    def __str__(self):
+        return "consumer_key: " + self.consumer_key + "\n" + \
+               "consumer_secret: " + self.consumer_secret + "\n" + \
+               "access_token: " + self.access_token + "\n" + \
+               "access_secret: " + self.access_secret + "\n" + \
+               "user_name: " + self.twitter_user_name + "\n" + \
+               "database: " + self.database_path
 
     def save_arguments(self, options: [dict]):
         self.local = options["local"]
         self.use_database = options["database"]
+        self.file_path = get_config_file_path(options["config"])
 
 
 def get_library_root_path():
@@ -36,7 +46,7 @@ def get_library_root_path():
     return library_root_path
 
 
-def read_config_file(custom_path_to_config="") -> str:
+def get_config_file_path(custom_path_to_config="") -> str:
     home = os.getenv("HOME")
     default_config_path = [
         home + "/.botkun.toml",
@@ -47,6 +57,11 @@ def read_config_file(custom_path_to_config="") -> str:
     if path_to_config == "":
         path_to_config = [p for p in default_config_path if os.path.isfile(p)][0]
 
+    return path_to_config
+
+
+def read_config_file(custom_path_to_config="") -> str:
+    path_to_config = get_config_file_path(custom_path_to_config)
     config_file = open(path_to_config, "r")
     config_toml = config_file.read()
     config_file.close()
