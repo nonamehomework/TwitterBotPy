@@ -56,18 +56,27 @@ def get_library_root_path():
 def get_config_file_path(custom_path_to_config="") -> str:
     path_to_config = custom_path_to_config
     if path_to_config == "":
-        path_to_config = [p for p in default_config_path if os.path.isfile(p)][0]
+        exists = [p for p in default_config_path if os.path.isfile(p)]
+        if len(exists) == 0:
+            print("Config file not found")
+            exit(-2)
+        else:
+            path_to_config = exists[0]
 
     return path_to_config
 
 
 def read_config_file(custom_path_to_config="") -> str:
     path_to_config = get_config_file_path(custom_path_to_config)
-    config_file = open(path_to_config, "r")
-    config_toml = config_file.read()
-    config_file.close()
+    try:
+        config_file = open(path_to_config, "r")
+        config_toml = config_file.read()
+        config_file.close()
 
-    return config_toml
+        return config_toml
+    except FileNotFoundError:
+        print("Config file not found")
+        exit(-2)
 
 
 def parse_config(config_toml: str) -> BotConfig:
