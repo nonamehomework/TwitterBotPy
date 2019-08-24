@@ -1,12 +1,6 @@
 import os
 import toml
-
-home = os.getenv("HOME")
-default_config_path = [
-    home + "/.botkun.toml",
-    home + "/.config/botkun.toml",
-    home + "/.config/botkun/config.toml"
-]
+from botkun import default_config_path
 
 
 class BotConfig:

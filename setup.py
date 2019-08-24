@@ -1,8 +1,8 @@
 import setuptools
 import os
 from shutil import copy
-from botkun.config import default_config_path
- 
+from botkun import default_config_path
+
 setuptools.setup()
 
 # create config file
