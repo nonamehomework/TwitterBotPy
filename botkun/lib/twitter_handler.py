@@ -1,12 +1,15 @@
 from twitter import Api
 from twitter import TwitterError
+from typing import List, Dict, Any
+
+Tweet = Dict[str, Any]
 
 
 def get_filtered_tweets(consumer_key: str,
                         consumer_secret: str,
                         access_token: str,
                         access_secret: str,
-                        my_screen_name="") -> [dict]:
+                        my_screen_name="") -> List[Tweet]:
     session = create_session(
         consumer_key=consumer_key,
         consumer_secret=consumer_secret,
@@ -25,7 +28,7 @@ def get_filtered_tweets(consumer_key: str,
     return filtered
 
 
-def get_home_timeline(session: Api) -> [dict]:
+def get_home_timeline(session: Api) -> List[Tweet]:
     try:
         timeline = session.GetHomeTimeline(count=200, exclude_replies=True, include_entities=False)
         return [status.AsDict() for status in timeline]

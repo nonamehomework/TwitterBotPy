@@ -1,10 +1,13 @@
 import sqlite3
 from contextlib import closing
+from typing import List, Dict, Union
 
 table_name = "bot"
 
+DBEntry = Dict[str, Union[str, int]]
 
-def add_to_database(db_name: str, data: [dict]) -> int:
+
+def add_to_database(db_name: str, data: List[DBEntry]) -> int:
     connection = sqlite3.connect(db_name)
     with closing(connection):
         cursor = connection.cursor()
@@ -47,11 +50,12 @@ def get_latest_tweet(db_name: str) -> int:
             return m
 
 
-def get_db_entries(db_name: str) -> [dict]:
+def get_db_entries(db_name: str) -> List[DBEntry]:
     word_blocks = []
     connection = sqlite3.connect(db_name)
     with closing(connection):
         cursor = connection.cursor()
+
         # create table
         cursor.execute("CREATE TABLE IF NOT EXISTS {} \
                 (word1 TEXT, word2 TEXT, word3 TEXT, id INTEGER, user TEXT);".format(table_name))
@@ -73,6 +77,7 @@ def delete_db_entries_by_id(db_name: str, tweet: int) -> bool:
     connection = sqlite3.connect(db_name)
     with closing(connection):
         cursor = connection.cursor()
+
         # create table
         cursor.execute("CREATE TABLE IF NOT EXISTS {} \
                 (word1 TEXT, word2 TEXT, word3 TEXT, id INTEGER, user TEXT);".format(table_name))

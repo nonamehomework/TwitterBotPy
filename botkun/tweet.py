@@ -2,7 +2,10 @@ from botkun.lib.twitter_handler import *
 from botkun.lib.markov import *
 from botkun.lib.database import *
 from botkun.config import BotConfig
+from typing import List, Dict, TypeVar
 import random
+
+DBEntry = Dict[str, str]
 
 max_try = 100
 
@@ -71,7 +74,7 @@ def tweet(config: BotConfig):
             exit(-1)
 
 
-def is_enough_quality(candidate: [dict]) -> bool:
+def is_enough_quality(candidate: List[DBEntry]) -> bool:
     cost = 0
     length = len(candidate)
     for i in range(length - 1):
