@@ -1,5 +1,10 @@
 from MeCab import Tagger
 from random import randint
+from typing import List, Dict, TypeVar, Union
+
+T = TypeVar('T')
+WordBlock = List[str]
+DBEntry = Dict[str, Union[str, int]]
 
 
 def create_mecab(arg="") -> Tagger:
@@ -8,7 +13,7 @@ def create_mecab(arg="") -> Tagger:
     return mecab
 
 
-def parse_string(string: str, mecab: Tagger) -> [str]:
+def parse_string(string: str, mecab: Tagger) -> List[str]:
     parsed = []
     node = mecab.parseToNode(string)
     while node:
@@ -20,7 +25,7 @@ def parse_string(string: str, mecab: Tagger) -> [str]:
     return parsed
 
 
-def create_word_block(words: [str]) -> [[str]]:
+def create_word_block(words: [str]) -> List[WordBlock]:
     word_block = []
     words.insert(0, "")  # head of string
     words.append("")  # last of string
@@ -30,7 +35,7 @@ def create_word_block(words: [str]) -> [[str]]:
     return word_block
 
 
-def connect_word_blocks(word_blocks: [[str]], connected_indexes=None) -> [int]:
+def connect_word_blocks(word_blocks: List[WordBlock], connected_indexes=None) -> List[int]:
     if connected_indexes is None:
         connected_indexes = []
 
@@ -52,7 +57,7 @@ def connect_word_blocks(word_blocks: [[str]], connected_indexes=None) -> [int]:
         return connect_word_blocks(word_blocks, connected_indexes + [next_candidate[i]])
 
 
-def create_list_from_indexes(lst: list, indexes: [int]) -> list:
+def create_list_from_indexes(lst: List[T], indexes: [int]) -> List[T]:
     return [lst[i] for i in indexes]
 
 
@@ -72,7 +77,7 @@ def create_db_entries(tweet: dict, mecab: Tagger) -> [dict]:
     return db_entries
 
 
-def create_string_from_blocks(blocks: [dict]) -> str:
+def create_string_from_blocks(blocks: List[DBEntry]) -> str:
     string = ""
     for e in blocks:
         string += e["word2"] + e["word3"]
