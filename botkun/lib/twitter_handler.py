@@ -26,6 +26,7 @@ def can_tweet_be_used(t: Tweet, my_screen_name: str) -> bool:
             "http" not in t["text"] and
             "RT" not in t["text"] and
             "#" not in t["text"] and
+            "@" not in t["text"]
             )
 
 
