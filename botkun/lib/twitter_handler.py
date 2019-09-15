@@ -17,15 +17,16 @@ def get_filtered_tweets(consumer_key: str,
         access_secret=access_secret)
     timeline = get_home_timeline(session)
 
-    tweet_filter = (lambda s:
-                    s["user"]["screen_name"] != my_screen_name and
-                    "http" not in s["text"] and
-                    "RT" not in s["text"] and
-                    "#" not in s["text"])
-
-    filtered = [s for s in timeline if tweet_filter(s)]
+    filtered = [t for t in timeline if can_tweet_be_used(t, my_screen_name)]
 
     return filtered
+
+def can_tweet_be_used(t: Tweet, my_screen_name: str) -> bool:
+    return (t["user"]["screen_name"] != my_screen_name and
+            "http" not in t["text"] and
+            "RT" not in t["text"] and
+            "#" not in t["text"] and
+            )
 
 
 def get_home_timeline(session: Api) -> List[Tweet]:
