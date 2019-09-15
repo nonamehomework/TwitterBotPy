@@ -36,7 +36,7 @@ class BotConfig:
                "user_name: " + self.twitter_user_name + "\n" + \
                "database: " + self.database_path
 
-    def save_arguments(self, options: Dict[str, Union[str, bool]):
+    def save_arguments(self, options: Dict[str, Union[str, bool]]):
         self.local = options["local"]
         self.use_database = options["database"]
         self.file_path = get_config_file_path(options["config"])
